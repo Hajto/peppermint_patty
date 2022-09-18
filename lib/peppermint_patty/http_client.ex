@@ -30,7 +30,7 @@ defmodule PeppermintPatty.HttpClient do
     case client().get(url, opts: [adapter: [response: :stream]]) do
       {:ok, %Tesla.Env{status: 200, body: body}} -> {:ok, body}
       # TODO: Proper error handling
-      {:ok, %Tesla.Env{} = erronous_response} -> {:error, erronous_response}
+      {:ok, %Tesla.Env{} = erroneous_response} -> {:error, erroneous_response}
       {:error, _reason} = error -> error
     end
   end
