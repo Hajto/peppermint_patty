@@ -1,3 +1,2 @@
 defmodule PeppermintPatty do
-
 end
