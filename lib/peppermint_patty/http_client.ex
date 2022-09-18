@@ -1,4 +1,10 @@
 defmodule PeppermintPatty.HttpClient do
+  @moduledoc """
+  This module provides functionality to resolve HTTP and HTTPS resources.
+
+  By default it uses built in Tesla client, which can be configured with adapter.
+  Uses Finch by default to take advantage of response streaming.
+  """
   @behaviour PeppermintPatty.File
 
   defmodule DefaultTeslaClient do

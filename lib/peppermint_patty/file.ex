@@ -26,12 +26,22 @@ defmodule PeppermintPatty.File do
 
   defp open_by_proto(url, nil) do
     chunk_size = local_file_chunk_size()
-    File.stream!(url, [], chunk_size)
+    stream = File.stream!(url, [], chunk_size)
+    {:ok, stream}
   end
 
+  @spec local_file_chunk_size :: pos_integer()
   def local_file_chunk_size do
     :peppermint_patty
     |> Application.get_env(__MODULE__, [])
     |> Keyword.get(:chunk_size, @default_chunk_size)
   end
+
+  @spec save(file(), String.t()) :: :ok | {:error, reason :: any()}
+  def save(file, path), do: PeppermintPatty.FileOps.save(file, path)
+end
+
+defprotocol PeppermintPatty.FileOps do
+  @spec save(t, String.t()) :: :ok | {:error, reason :: any()}
+  def save(patty_file, path)
 end
