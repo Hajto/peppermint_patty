@@ -1,7 +1,7 @@
 defmodule PeppermintPatty.FileTest do
   use ExUnit.Case, async: false
 
-  alias PeppermintPatty.File, as: Patty
+  alias PeppermintPatty.File, as: PattyFile
 
   describe "open/2" do
     test "when opening a localfile returns a stream" do
@@ -9,7 +9,7 @@ defmodule PeppermintPatty.FileTest do
       contents = "File contents!"
       File.write!(tmp_file, contents, [:write])
 
-      assert {:ok, %Patty.Stream{stream: stream}} = Patty.open(tmp_file)
+      assert {:ok, %PattyFile.Stream{stream: stream}} = PattyFile.open(tmp_file)
       assert Enum.join(stream) == contents
     end
 
@@ -25,7 +25,7 @@ defmodule PeppermintPatty.FileTest do
           %Tesla.Env{env | body: contents, status: 200}
         end)
 
-        assert {:ok, %PeppermintPatty.File.InMemory{content: "File contents!"}} == Patty.open(url)
+        assert {:ok, %PattyFile.InMemory{content: "File contents!"}} == PattyFile.open(url)
       end
     end
 
@@ -42,13 +42,13 @@ defmodule PeppermintPatty.FileTest do
           %Tesla.Env{env | body: stream, status: 200}
         end)
 
-        assert {:ok, %PeppermintPatty.File.Stream{stream: stream}} == Patty.open(url)
+        assert {:ok, %PattyFile.Stream{stream: stream}} == PattyFile.open(url)
         assert Enum.join(stream) == contents
       end
     end
 
     test "error results in error tuple" do
-      assert {:error, :enoent} == Patty.open("/tmp/files/that/does/not/exist")
+      assert {:error, :enoent} == PattyFile.open("/tmp/files/that/does/not/exist")
     end
   end
 end
