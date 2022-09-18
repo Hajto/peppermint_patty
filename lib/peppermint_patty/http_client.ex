@@ -1,4 +1,6 @@
 defmodule PeppermintPatty.HttpClient do
+  @behaviour PeppermintPatty.File
+
   defmodule DefaultTeslaClient do
     @doc false
     use Tesla
@@ -8,7 +10,7 @@ defmodule PeppermintPatty.HttpClient do
   Opens remote file results in either downloaded binary
   or a stream if adapter supports that.
   """
-  @spec open(String.t()) :: {:ok, binary()} | {:ok, stream :: map()} | {:error, any()}
+  @impl true
   def open(url) do
     case client().get(url, opts: [adapter: [response: :stream]]) do
       {:ok, %Tesla.Env{status: 200, body: body}} -> {:ok, body}
