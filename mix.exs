@@ -21,7 +21,11 @@ defmodule PeppermintPatty.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:tesla, github: "elixir-tesla/tesla", branch: "tt/finch-stream"}
+      {:tesla, github: "elixir-tesla/tesla", branch: "tt/finch-stream"},
+
+      # Storage solutions
+      {:ex_aws, "~> 2.1", optional: true},
+      {:ex_aws_s3, "~> 2.0", optional: true},
     ]
   end
 end
