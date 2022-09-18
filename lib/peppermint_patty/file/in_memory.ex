@@ -6,6 +6,7 @@ defmodule PeppermintPatty.File.InMemory do
           content: binary()
         }
 end
+
 defimpl PeppermintPatty.FileOps, for: PeppermintPatty.File.InMemory do
   @spec save(PeppermintPatty.File.InMemory.t(), String.t()) :: :ok | {:error, File.posix()}
   def save(%PeppermintPatty.File.InMemory{content: content}, path) do

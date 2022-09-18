@@ -8,6 +8,13 @@ defmodule PeppermintPatty.File do
 
   @default_chunk_size 2048
 
+  @doc """
+  Opens an image.
+
+  Depending on the uri:
+   - remote resources will be fetched, f.e. remote image will be downloaded
+   - local file will be opened
+  """
   @spec open(String.t()) :: {:ok, file()} | {:error, any()}
   def open(uri) do
     case URI.new(uri) do
@@ -25,9 +32,13 @@ defmodule PeppermintPatty.File do
   end
 
   defp open_by_proto(url, nil) do
-    chunk_size = local_file_chunk_size()
-    stream = File.stream!(url, [], chunk_size)
-    {:ok, stream}
+    if File.exists?(url) do
+      chunk_size = local_file_chunk_size()
+      stream = File.stream!(url, [], chunk_size)
+      {:ok, %PattyFile.Stream{stream: stream}}
+    else
+      {:error, :enoent}
+    end
   end
 
   @spec local_file_chunk_size :: pos_integer()
