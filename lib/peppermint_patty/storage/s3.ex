@@ -1,5 +1,3 @@
-
-
 if Code.ensure_loaded?(ExAws.S3) do
   defmodule PeppermintPatty.Storage.S3 do
     @behaviour PeppermintPatty.Storage
@@ -16,8 +14,10 @@ if Code.ensure_loaded?(ExAws.S3) do
       |> PeppermintPatty.Storage.S3.Storeable.store(bucket, path)
       |> @ex_aws.request()
       |> case do
-        {:ok, _response} -> {:ok, "totally path"}
-        {:error, _reason} =error -> error
+        {:ok, %{status_code: 200}} ->
+          :ok
+        {:error, _reason} = error ->
+          error
       end
     end
 

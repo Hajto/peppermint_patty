@@ -26,6 +26,8 @@ defmodule PeppermintPatty.MixProject do
       # Storage solutions
       {:ex_aws, "~> 2.1", optional: true},
       {:ex_aws_s3, "~> 2.0", optional: true},
+      {:hackney, "~> 1.9", optional: true, only: [:dev]},
+      {:jason, "~> 1.4.0", only: [:dev]}
     ]
   end
 end
