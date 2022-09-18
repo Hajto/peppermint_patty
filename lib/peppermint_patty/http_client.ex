@@ -4,6 +4,15 @@ defmodule PeppermintPatty.HttpClient do
 
   By default it uses built in Tesla client, which can be configured with adapter.
   Uses Finch by default to take advantage of response streaming.
+
+  ## Configuration
+
+  - `:tesla_client` - points to Tesla client that will be used for fetching images. The client
+  will dictate retry and timeout algorithm.
+  ```
+  config :peppermint_patty, PeppermintPatty.HttpClient
+    tesla_client: YourClientModuleName
+  ```
   """
   @behaviour PeppermintPatty.File
 
