@@ -24,3 +24,5 @@ peppermint_patty-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+.DS_Store

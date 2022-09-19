@@ -2,7 +2,7 @@ if Code.ensure_loaded?(ExAws.S3) do
   defmodule PeppermintPatty.Storage.S3 do
     @behaviour PeppermintPatty.Storage
 
-    @ex_aws ExAws
+    @ex_aws Application.compile_env(:peppermint_patty, [__MODULE__, :ex_aws], ExAws)
 
     alias PeppermintPatty.Storage
 
@@ -16,6 +16,7 @@ if Code.ensure_loaded?(ExAws.S3) do
       |> case do
         {:ok, %{status_code: 200}} ->
           :ok
+
         {:error, _reason} = error ->
           error
       end
